@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(46, 34, 38);
+    color: rgb(240, 222, 227);
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; 
+}
+
+.container * {
+    margin: 10px; 
+}
+button{
+    padding: 10px;
+    color: black;
+    border-radius: 5px;
+    border: none;
+    font-family:'Courier New', Courier, monospace;
+}
+input{
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    padding-left: 10px;
+}
+
+#c:hover{
+    background-color: rgb(244, 134, 126);
+    cursor: pointer;
+    color: rgb(255, 254, 254);
+}
+ #u:hover{
+background-color: rgb(247, 249, 127);
+cursor: pointer;
+    color: rgb(255, 254, 254);
+}
+#r:hover{
+background-color:rgb(113, 223, 135);
+cursor: pointer;
+    color: rgb(254, 254, 254);
+}
+#d:hover{
+    cursor: pointer;
+    color: rgb(252, 251, 251);
+    background-color:rgb(104, 179, 219) ;
+}
+
+#submitB:hover{
+    cursor: pointer;
+    color: rgb(252, 251, 251);
+    background-color: rgb(244, 134, 126);
+}
+#updatesB:hover{
+    cursor: pointer;
+    color: rgb(252, 251, 251);
+    background-color: rgb(247, 249, 127);
+}
+#deletesB:hover{
+    cursor: pointer;
+    color: rgb(252, 251, 251);
+    background-color: rgb(104, 179, 219);
+}
+#readsB:hover{
+    cursor: pointer;
+    color: rgb(252, 251, 251);
+    background-color: rgb(113, 223, 135);
+}
+.positions{
+margin-right: 800px;
+margin-top: 60px;
+}

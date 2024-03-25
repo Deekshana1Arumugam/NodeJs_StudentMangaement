@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD OPERATIONS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>CRUD OPERATIONS</h1>
+    <div class="container">
+        
+        <button type="button" onclick="addUser()" id="c" >Create</button>
+        <button type="button" onclick="UpdateUser()" id="u">Update</button>
+        <button type="button" onclick="ReadUser()" id="r">Read</button>
+        <button type="button" onclick="deleteUser()" id="d">Delete</button>
+    </div>
+</body>
+<script>
+    function addUser() {
+        window.open('creates.html', '_blank');
+    }
+    function UpdateUser() {
+        window.open('updates.html', '_blank');
+    }
+    function ReadUser() {
+        window.open('reads.html', '_blank');
+    }
+    function deleteUser() {
+        window.open('deletes.html', '_blank');
+    }
+</script>
+</html>

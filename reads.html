@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Read Student Details</h1>
+    <div class="container">
+        <button id="readsB" onclick="reads()">Read All</button>
+    </div>
+    <div id="studentTable"></div> <!-- This div will contain the student table -->
+    
+    <script>
+        async function reads() {
+            try {
+                const response = await fetch('http://localhost:6030/reads', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json(); // Parse response as JSON
+
+                // Call a function to generate the table with the data
+                generateStudentTable(data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function generateStudentTable(data) {
+    const tableDiv = document.getElementById('studentTable');
+    const table = document.createElement('table');
+    const headerRow = table.insertRow();
+
+    // Create table headers
+    for (const key in data[0]) {
+        const headerCell = document.createElement('th');
+        headerCell.textContent = key;
+        headerRow.appendChild(headerCell);
+    }
+
+    // Create table rows
+    data.forEach(student => {
+        const row = table.insertRow();
+        for (const key in student) {
+            const cell = row.insertCell();
+            if (key === 'DOB') {
+                const dob = new Date(student[key]);
+                cell.textContent = dob.toLocaleDateString(); // Format date
+            } else {
+                cell.textContent = student[key];
+            }
+            cell.style.padding= '10px';
+        }
+    });
+
+    tableDiv.innerHTML = ''; // Clear existing table
+    tableDiv.appendChild(table); // Append the new table to the div
+}
+
+    </script>
+</body>
+</html>
