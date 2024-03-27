@@ -4,16 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Read Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Read Student Details</h1>
     <div class="container">
-        <button id="readsB" onclick="reads()">Read All</button>
+        <button id="readBtn" onclick="reads()">Read All</button>
+        
     </div>
-    <div id="studentTable"></div> <!-- This div will contain the student table -->
-    
+    <div id="studentTable">
+       <!-- This div will contain the student table --> 
+    </div> 
+    <button type="button" id="BackBtn">Back</button>
     <script>
+           document.getElementById("BackBtn").addEventListener("click", function() {
+            window.location.href = 'index.html';
+        });
         async function reads() {
             try {
                 const response = await fetch('http://localhost:6030/reads', {
@@ -29,14 +36,16 @@
 
                 const data = await response.json(); // Parse response as JSON
 
-                // Call a function to generate the table with the data
+                //function to generate the table with the data
+
                 generateStudentTable(data);
+                
             } catch (error) {
                 console.error('Error:', error);
             }
         }
 
-        function generateStudentTable(data) {
+    function generateStudentTable(data) {
     const tableDiv = document.getElementById('studentTable');
     const table = document.createElement('table');
     const headerRow = table.insertRow();
@@ -55,12 +64,35 @@
             const cell = row.insertCell();
             if (key === 'DOB') {
                 const dob = new Date(student[key]);
-                cell.textContent = dob.toLocaleDateString(); // Format date
+                cell.textContent = dob.toLocaleDateString(); //Format date
             } else {
                 cell.textContent = student[key];
             }
             cell.style.padding= '10px';
         }
+                const iconCell = row.insertCell();
+                const editIcon = document.createElement('i');
+                editIcon.classList.add('fa-regular', 'fa-pen-to-square', 'small-icon');
+                
+                editIcon.addEventListener('click', () => {
+                   
+                    const rowIndex = row.rowIndex - 1; // Adjust index for header row
+                    const studentData = data[rowIndex]; // Retrieve student data associated with the clicked row
+
+    //Construct URL with query parameters
+    const queryParams = new URLSearchParams();
+    for (const key in studentData) {
+        queryParams.append(key, studentData[key]);
+    }
+    const queryString = queryParams.toString();
+    const updatePageUrl = `updates.html?${queryString}`;
+
+    //Redirect to update page
+    window.location.href = updatePageUrl;
+
+});
+    iconCell.appendChild(editIcon);
+    
     });
 
     tableDiv.innerHTML = ''; // Clear existing table

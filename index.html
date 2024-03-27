@@ -9,25 +9,31 @@
 <body>
     <h1>CRUD OPERATIONS</h1>
     <div class="container">
-        
-        <button type="button" onclick="addUser()" id="c" >Create</button>
-        <button type="button" onclick="UpdateUser()" id="u">Update</button>
-        <button type="button" onclick="ReadUser()" id="r">Read</button>
-        <button type="button" onclick="deleteUser()" id="d">Delete</button>
+        <button type="button" id="createBtn">Create</button>
+        <button type="button" id="updateBtn">Update</button>
+        <button type="button" id="readBtn">Read</button>
+        <button type="button" id="deleteBtn">Delete</button>
     </div>
+    <div id="contentArea"></div>
+
+    <script>
+
+document.getElementById("createBtn").addEventListener("click", function() {
+    window.location.href = 'creates.html';
+});
+
+document.getElementById("updateBtn").addEventListener("click", function() {
+    window.location.href = 'updates.html';
+});
+
+document.getElementById("readBtn").addEventListener("click", function() {
+    window.location.href = 'reads.html';
+});
+
+document.getElementById("deleteBtn").addEventListener("click", function() {
+    window.location.href = 'deletes.html';
+});
+
+    </script>
 </body>
-<script>
-    function addUser() {
-        window.open('creates.html', '_blank');
-    }
-    function UpdateUser() {
-        window.open('updates.html', '_blank');
-    }
-    function ReadUser() {
-        window.open('reads.html', '_blank');
-    }
-    function deleteUser() {
-        window.open('deletes.html', '_blank');
-    }
-</script>
 </html>

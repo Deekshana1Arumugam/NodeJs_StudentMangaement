@@ -14,11 +14,31 @@
         <input type="text" id="ageInput" placeholder="Enter Student Age">
         <input type="text" id="dobInput" placeholder="YYYY-MM-DD (DOB)">
         <input type="text" id="cityInput" placeholder="Enter Student City">
-        <button id="updatesB" onclick="updates()">Update</button>
+        <button id="updateBtn" onclick="updates()">Update</button>
+        <button type="button" id="readBtn">Read</button>
+        <button type="button" id="BackBtn">Back</button>
+
     </div>
     <div id="successMessage" style="display: none; color: rgb(153, 227, 114); font-weight: bold;font-family: 'Courier New', Courier, monospace; position: fixed; top: 10px; right: 10px;"></div>
 
     <script>
+        document.getElementById("BackBtn").addEventListener("click", function() {
+            window.location.href = 'index.html';
+        });
+        document.getElementById("readBtn").addEventListener("click", function() {
+            window.location.href = 'reads.html';
+        });
+      document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            for (const pair of urlParams.entries()) {
+                const [key, value] = pair;
+                const inputField = document.getElementById(key + 'Input');
+                if (inputField) {
+                    inputField.value = value;
+                }
+            }
+        });
+
         async function updates() {
             const SnoInput = document.getElementById('SnoInput');
             const Sno = SnoInput.value;
@@ -47,7 +67,7 @@
                 }
 
                 const data = await response.text();
-                console.log(data); // Log response from server
+                console.log(data); //response from server
 
                 const successMessage = document.getElementById('successMessage');
                 successMessage.textContent = 'Student details updated successfully!';
@@ -57,12 +77,11 @@
                     successMessage.style.display = 'none';
                 }, 2000);
 
-                // Optionally, handle the response as needed
+                //handle the response as needed
             } catch (error) {
                 console.error('Error:', error);
             }
 
-            // Clear input fields after submission
             nameInput.value = '';
             ageInput.value = '';
             dobInput.value = '';

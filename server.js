@@ -1,11 +1,11 @@
 const http = require('http');
 const url = require('url');
-//const querystring = require('querystring');
-const mysql = require('mysql'); // Import the MySQL module
+
+const mysql = require('mysql'); //Import the MySQL module
 const cors = require('cors'); 
 
 
-// Create a MySQL connection pool
+//MySQL connection pool
 const pool = mysql.createPool({
     host: "localhost",
     user: "root",
@@ -14,7 +14,7 @@ const pool = mysql.createPool({
     connectionLimit: 10
 });
 
-// Function to handle database queries
+//handle database queries
 function queryDatabase(query, values) {
     return new Promise((resolve, reject) => {
         pool.query(query, values, (err, result) => {
@@ -27,13 +27,13 @@ function queryDatabase(query, values) {
     });
 }
 
-// Create a HTTP server
+//HTTP server
 const server = http.createServer((req, res) => {
     
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
+    res.setHeader('Access-Control-Allow-Origin', '*'); //Allow requests from any origin
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    // preflight OPTIONS requests
+    //preflight OPTIONS requests
     if (req.method === 'OPTIONS') {
         
         res.writeHead(200);
@@ -46,9 +46,10 @@ const server = http.createServer((req, res) => {
     const path = parsedUrl.pathname;
 
     const method = req.method;
-   // Handle GET requests to the '/reads' endpoint
+   //GET requests to the '/reads' endpoint
 if (method === 'GET' && path === '/reads') {
-    // Query database to fetch all student details
+
+    //database to fetch all student details
     const sql = "SELECT * FROM students";
     pool.query(sql, (err, result) => {
         if (err) {
@@ -69,13 +70,11 @@ if (method === 'GET' && path === '/reads') {
     return;
 }
 
-
-
-    // Handle POST requests to the '/submit' endpoint
+    //POST requests to the '/submit' endpoint
     if (req.method === 'POST' && req.url === '/submit') {
         let body = '';
         req.on('data', chunk => {
-            body += chunk.toString(); // Convert Buffer to string
+            body += chunk.toString(); //Convert Buffer to string
         });
         req.on('end', async () => {
             
@@ -83,17 +82,17 @@ if (method === 'GET' && path === '/reads') {
             try {
                 const formData = JSON.parse(body);
 
-            // Insert data into the database
+            //Insert data into the database
             const sql = "INSERT INTO students (Names, Age, DOB, City) VALUES (?, ?, ?, ?)";
             const values = [formData.name, formData.age, formData.dob, formData.city];
-                // Insert data into the database
+          
                 const result = await queryDatabase(sql, values);
                 
                 console.log("Inserted new student with ID:", result.insertId);
 
                 console.log("Received data:", values);
  
-                // Send response back to the client
+                //Send response back to the client
                 res.writeHead(200, { 'Content-Type': 'text/plain' });
                 res.end('Data received and stored successfully!');
             } catch (error) {
@@ -105,11 +104,11 @@ if (method === 'GET' && path === '/reads') {
         return;
     }
 
-    // Handle PUT requests to the '/updates' endpoint
+    //PUT requests to the '/updates' endpoint
 if (method === 'PUT' && path === '/updates') {
     let body = '';
     req.on('data', chunk => {
-        body += chunk.toString(); // Convert Buffer to string
+        body += chunk.toString();
     });
     req.on('end', async () => {
         try {
@@ -120,9 +119,9 @@ if (method === 'PUT' && path === '/updates') {
             let values = [];
             let isFirstField = true;
 
-            // Loop through formData and construct the SQL query dynamically
+            //Loop through formData and construct the SQL query dynamically
             for (const field in formData) {
-                if (formData[field] !== '' && field !== 'id') { // Exclude empty fields and 'id' field
+                if (formData[field] !== '' && field !== 'id') { //Exclude empty and 'id' fields
                     if (!isFirstField) {
                         sql += ",";
                     }
@@ -132,19 +131,18 @@ if (method === 'PUT' && path === '/updates') {
                 }
             }
 
-            // Add condition for the specific student ID
+            //Add condition for the specific student ID
             sql += " WHERE Sno=?";
 
             values.push(formData.id);
 
-            // Execute the SQL query
+            //Execute the SQL query
             const result = await queryDatabase(sql, values);
             
             console.log("Updated student with ID:", formData.id);
 
             console.log("Received data:", values);
 
-            // Send response back to the client
             res.writeHead(200, { 'Content-Type': 'text/plain' });
             res.end('Data received and updated successfully!');
         } catch (error) {
@@ -156,20 +154,20 @@ if (method === 'PUT' && path === '/updates') {
     return;
 }
 
-  // Handle DELETE requests to the '/deletes' endpoint
+  //DELETE requests to the '/deletes' endpoint
 if (req.method === 'DELETE' && req.url === '/deletes') {
     let body = '';
     req.on('data', chunk => {
-        body += chunk.toString(); // Convert Buffer to string
+        body += chunk.toString();
     });
     req.on('end', async () => {
         try {
             const formData = JSON.parse(body);
 
-            // Extract the value from the request data
+            //Extract the value from the request data
             const Sno = formData.Sno;
 
-            // Delete data from the database based on the ID
+            //Delete data from the database based on the ID
             const sql = "DELETE FROM students WHERE Sno = ?";
             const values = [Sno];
             const result = await queryDatabase(sql, values);
@@ -193,12 +191,12 @@ if (req.method === 'DELETE' && req.url === '/deletes') {
     return;
 }
 
-    // Handle other requests (e.g., serving HTML files)
+    //other requests (e.g., serving HTML files)
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('404 Not Found');
 });
 
-// Start the server
+//Start the server
 const PORT = process.env.PORT || 6030;
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

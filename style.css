@@ -38,48 +38,44 @@ input{
     padding-left: 10px;
 }
 
-#c:hover{
+#createBtn:hover{
     background-color: rgb(244, 134, 126);
     cursor: pointer;
     color: rgb(255, 254, 254);
 }
- #u:hover{
-background-color: rgb(247, 249, 127);
-cursor: pointer;
-    color: rgb(255, 254, 254);
-}
-#r:hover{
-background-color:rgb(113, 223, 135);
-cursor: pointer;
-    color: rgb(254, 254, 254);
-}
-#d:hover{
+#updateBtn:hover{
     cursor: pointer;
     color: rgb(252, 251, 251);
-    background-color:rgb(104, 179, 219) ;
+    background-color: rgb(226, 228, 100);
 }
-
-#submitB:hover{
-    cursor: pointer;
-    color: rgb(252, 251, 251);
-    background-color: rgb(244, 134, 126);
-}
-#updatesB:hover{
-    cursor: pointer;
-    color: rgb(252, 251, 251);
-    background-color: rgb(247, 249, 127);
-}
-#deletesB:hover{
+#deleteBtn:hover{
     cursor: pointer;
     color: rgb(252, 251, 251);
     background-color: rgb(104, 179, 219);
 }
-#readsB:hover{
+#readBtn:hover{
     cursor: pointer;
     color: rgb(252, 251, 251);
     background-color: rgb(113, 223, 135);
 }
+
+#BackBtn:hover{
+    cursor: pointer;
+    color: rgb(252, 251, 251);
+    background-color: rgb(11, 11, 11);
+}
 .positions{
 margin-right: 800px;
 margin-top: 60px;
+}
+
+.small-icon {
+    font-size: 16px;
+    cursor: pointer; 
+    transition: color 0.3s;
+}
+
+/* Change color of the icon on hover */
+.small-icon:hover {
+    color: rgb(234, 88, 88); /* Change the color to red on hover */
 }

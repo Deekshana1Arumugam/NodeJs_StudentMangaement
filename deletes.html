@@ -10,46 +10,57 @@
     <h1>Delete Student Details</h1>
     <div class="container">
         <input type="text" id="SnoInput" placeholder="Enter Sno">
-        <button id="deletesB" onclick="deletes()">Delete</button>
+        <button id="deleteBtn">Delete</button>
+        <button type="button" id="readBtn">Read</button>
+        <button type="button" id="BackBtn">Back</button>
     </div>
     <div id="successMessage" style="display: none; color: rgb(153, 227, 114); font-weight: bold;font-family: 'Courier New', Courier, monospace; position: fixed; top: 10px; right: 10px;"></div>
 
     <script>
+        document.getElementById("BackBtn").addEventListener("click", function() {
+            window.location.href = 'index.html';
+        });
+        document.getElementById("readBtn").addEventListener("click", function() {
+            window.location.href = 'reads.html';
+        });
+
+        document.getElementById("deleteBtn").addEventListener("click", deletes);
+
         async function deletes() {
             const SnoInput = document.getElementById('SnoInput');
             const Sno = SnoInput.value;
 
             try {
-        const response = await fetch('http://localhost:6030/deletes', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ Sno })
-        });
+                const response = await fetch('http://localhost:6030/deletes', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ Sno })
+                });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
 
-        const data = await response.text();
-        console.log(data); // Log response from server
+                const data = await response.text();
+                console.log(data); //response from server
 
                 const successMessage = document.getElementById('successMessage');
-                successMessage.textContent = 'Student details Deleted successfully!';
+                successMessage.textContent = 'Student details deleted successfully!';
                 successMessage.style.display = 'block';
 
                 setTimeout(() => {
                     successMessage.style.display = 'none';
                 }, 2000);
 
-        // Optionally, handle the response as needed
-    } catch (error) {
-        console.error('Error:', error);
-    }
-    // Clear input fields after submission
-    SnoInput.value = '';
+                //handle the response as needed
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+            SnoInput.value = '';
         }
-</script>
+    </script>
 </body>
 </html>
